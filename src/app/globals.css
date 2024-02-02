@@ -105,3 +105,48 @@ a {
     color-scheme: dark;
   }
 }
+
+/**************** PLAYER MANAGEMENT **************/
+
+.new-user-card {
+  height: 400px;
+  width: 300px;
+  background-color: white;
+  position: absolute;
+  left: 30vw;
+}
+.new-user-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  color: black;
+}
+.user-list {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(250px, 1fr)
+  ); /* Adjust the column width as needed */
+  gap: 20px; /* Adjust the gap between player cards */
+  justify-items: center; /* Center the content horizontally */
+  padding: 20px; /* Add padding around the grid */
+}
+.user-pic {
+  height: 80px;
+  width: 80px;
+  background-color: darkorchid;
+}
+.user-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 300px;
+  align-items: center;
+  background-color: #e0e0e0;
+  color: black;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 200px;
+}

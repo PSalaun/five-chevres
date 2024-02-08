@@ -93,6 +93,10 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  display: "flex";
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 a {
@@ -123,18 +127,16 @@ a {
 }
 .user-list {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(250px, 1fr)
-  ); /* Adjust the column width as needed */
-  gap: 20px; /* Adjust the gap between player cards */
-  justify-items: center; /* Center the content horizontally */
-  padding: 20px; /* Add padding around the grid */
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  grid-gap: 20px;
+  width: 100%;
+  padding: 3rem;
+  justify-content: center;
 }
 .user-pic {
   height: 80px;
-  width: 80px;
-  background-color: darkorchid;
+  width: 100%;
+  background-color: rgb(61, 57, 63);
 }
 .user-card {
   display: flex;
@@ -148,5 +150,52 @@ a {
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 200px;
+  width: 13rem;
+  margin: auto;
+}
+nav {
+  width: 100%;
+  background-color: #b7b1b120;
+  display: flex;
+  height: 80px;
+  position: absolute;
+  top: 0;
+}
+
+ul {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: space-around;
+}
+nav li {
+  list-style: none;
+  flex-grow: 0.5;
+  display: flex;
+  justify-content: space-around;
+}
+nav li a {
+  text-align: center;
+  margin: auto;
+  width: 100%;
+}
+li:hover {
+  background-color: rgb(140, 139, 138);
+}
+
+.page-title {
+  width: 100%;
+  text-align: left;
+  padding-top: 3rem;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 80px;
+  padding-top: 1rem;
+  width: 100%;
+  padding: 0 5rem;
 }

@@ -3,9 +3,9 @@ import { useState } from "react";
 
 interface NewPlayerCardProps {
   onSubmit: (player: Player) => void;
-  onClose: () => void;
 }
-const NewPlayerCard: React.FC<NewPlayerCardProps> = ({ onSubmit, onClose }) => {
+const NewPlayerCard: React.FC<NewPlayerCardProps> = ({ onSubmit }) => {
+  const [openNewPlayerForm, setOpenNewPlayerForm] = useState<boolean>(false);
   const [newPlayer, setNewPlayer] = useState<Player>({
     id: 0,
     name: "",
@@ -24,9 +24,6 @@ const NewPlayerCard: React.FC<NewPlayerCardProps> = ({ onSubmit, onClose }) => {
     setNewPlayer({ ...newPlayer, [name]: value });
     console.log(name, value);
   };
-  const handleClose = () => {
-    onClose();
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,36 +33,52 @@ const NewPlayerCard: React.FC<NewPlayerCardProps> = ({ onSubmit, onClose }) => {
   };
 
   return (
-    <div className="new-user-card ">
-      <h1> Ajouter un nouveau joueur</h1>
-      <form onSubmit={handleSubmit} className="new-user-card-content ">
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={newPlayer.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="hat">Chapeau:</label>
-          <input
-            type="number"
-            id="hat"
-            name="hat"
-            value={newPlayer.hat}
-            onChange={handleHat}
-            required
-          />
-        </div>
-        <div>
-          <button type="submit">Create Player</button>
-          <button onClick={handleClose}>Close</button>
-        </div>
-      </form>
+    <div className="user-card ">
+      {!openNewPlayerForm && (
+        <button onClick={setOpenNewPlayerForm}>
+          Ajouter un nouveau joueur
+        </button>
+      )}
+
+      {openNewPlayerForm && (
+        <>
+          <h4> Ajouter un nouveau joueur</h4>
+          <form onSubmit={handleSubmit} className="new-user-card-content ">
+            <div>
+              <label htmlFor="name">Name:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={newPlayer.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="hat">Chapeau:</label>
+              <input
+                type="number"
+                id="hat"
+                name="hat"
+                value={newPlayer.hat}
+                onChange={handleHat}
+                required
+              />
+            </div>
+            <div>
+              <button type="submit">Create Player</button>
+              <button
+                onClick={() => {
+                  setOpenNewPlayerForm(false);
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </form>
+        </>
+      )}
     </div>
   );
 };

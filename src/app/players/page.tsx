@@ -32,33 +32,22 @@ const Players = () => {
       profilPicture: "2",
     },
   ]);
-  const [openNewPlayerForm, setOpenNewPlayerForm] = useState<boolean>(false);
 
-  const closeForm = () => {
-    // Handle the player data (e.g., send it to an API)
-    // After successful submission, close the form
-    setOpenNewPlayerForm(false);
-  };
   const handleFormSubmit = (player: Player) => {
     // Effectuez ici le traitement souhaité avec les données du formulaire
     console.log("Données soumises :", player);
-    setOpenNewPlayerForm(false);
     player.id = Math.floor(Math.random() * 1000);
     setPlayerList([...playerList, player]);
     console.log(playerList);
   };
 
   return (
-    <>
-      <h1> Joueurs</h1>
-      {!openNewPlayerForm && (
-        <button onClick={setOpenNewPlayerForm}>Ajouter un joueur</button>
-      )}
+    <div className="page-container">
+      <h1 className="page-title"> Joueurs</h1>
 
-      {openNewPlayerForm && (
-        <NewPlayerCard onSubmit={handleFormSubmit} onClose={closeForm} />
-      )}
       <div className="user-list">
+        <NewPlayerCard onSubmit={handleFormSubmit} />
+
         {playerList.map((p: Player) => {
           return (
             <div key={p.id}>
@@ -67,7 +56,7 @@ const Players = () => {
           );
         })}
       </div>
-    </>
+    </div>
   );
 };
 export default Players;

@@ -1,16 +1,24 @@
+<<<<<<< Updated upstream
 import { Player } from "@/app/players/page";
-import { useState } from "react";
+=======
+"use client";
 
-interface NewPlayerCardProps {
-  onSubmit: (player: Player) => void;
-}
-const NewPlayerCard: React.FC<NewPlayerCardProps> = ({ onSubmit }) => {
+import { addPlayer } from "@/app/lib/actions";
+import { Player } from "@/app/lib/types";
+>>>>>>> Stashed changes
+import { useState } from "react";
+const NewPlayerCard: React.FC<{}> = () => {
   const [openNewPlayerForm, setOpenNewPlayerForm] = useState<boolean>(false);
   const [newPlayer, setNewPlayer] = useState<Player>({
     id: 0,
     name: "",
+<<<<<<< Updated upstream
     hat: 0,
     profilPicture: "",
+=======
+    tier: 0,
+    photo: "",
+>>>>>>> Stashed changes
   });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,7 +37,8 @@ const NewPlayerCard: React.FC<NewPlayerCardProps> = ({ onSubmit }) => {
     e.preventDefault();
     // Appeler la fonction onSubmit du parent avec les données du formulaire
     console.log(newPlayer);
-    onSubmit(newPlayer);
+    addPlayer(newPlayer);
+    // onSubmit(newPlayer);
   };
 
   return (
@@ -61,7 +70,7 @@ const NewPlayerCard: React.FC<NewPlayerCardProps> = ({ onSubmit }) => {
                 type="number"
                 id="hat"
                 name="hat"
-                value={newPlayer.hat}
+                value={newPlayer.tier}
                 onChange={handleHat}
                 required
               />

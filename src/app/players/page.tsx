@@ -1,9 +1,16 @@
+<<<<<<< Updated upstream
 "use client";
 
+=======
+import { fetchPlayers } from "@/app/lib/data/data";
+import { Player } from "@/app/lib/types";
+import PlayerList from "@/app/players/component/PlayerList";
+>>>>>>> Stashed changes
 import NewPlayerCard from "@/app/players/component/newPlayerCard";
 import PlayerCard from "@/app/players/component/playerCard";
 import { useState } from "react";
 
+<<<<<<< Updated upstream
 export type Player = {
   id: number;
   name: string;
@@ -56,6 +63,16 @@ const Players = () => {
           );
         })}
       </div>
+=======
+async function Players() {
+  const playerList = await fetchPlayers();
+  console.log(playerList);
+  console.log(playerList.rows);
+  return (
+    <div className="page-container">
+      <h1 className="page-title"> Joueurs</h1>
+      <PlayerList playerList={playerList.rows} />
+>>>>>>> Stashed changes
     </div>
   );
 };

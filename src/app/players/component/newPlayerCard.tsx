@@ -35,7 +35,7 @@ const NewPlayerCard: React.FC<NewPlayerCardProps> = ({ onSubmit }) => {
   return (
     <div className="user-card ">
       {!openNewPlayerForm && (
-        <button onClick={setOpenNewPlayerForm}>
+        <button onClick={(e) => setOpenNewPlayerForm(true)}>
           Ajouter un nouveau joueur
         </button>
       )}

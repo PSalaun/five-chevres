@@ -1,4 +1,4 @@
-import { Player } from "@/app/players/page";
+import { Player } from "@/app/lib/types";
 import { useState } from "react";
 
 interface NewPlayerCardProps {
@@ -10,7 +10,7 @@ const NewPlayerCard: React.FC<NewPlayerCardProps> = ({ onSubmit }) => {
     id: 0,
     name: "",
     hat: 0,
-    profilPicture: "",
+    photo: "",
   });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

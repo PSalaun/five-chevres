@@ -1,24 +1,15 @@
-<<<<<<< Updated upstream
-import { Player } from "@/app/players/page";
-=======
 "use client";
 
 import { addPlayer } from "@/app/lib/actions";
 import { Player } from "@/app/lib/types";
->>>>>>> Stashed changes
 import { useState } from "react";
 const NewPlayerCard: React.FC<{}> = () => {
   const [openNewPlayerForm, setOpenNewPlayerForm] = useState<boolean>(false);
   const [newPlayer, setNewPlayer] = useState<Player>({
     id: 0,
     name: "",
-<<<<<<< Updated upstream
-    hat: 0,
-    profilPicture: "",
-=======
     tier: 0,
     photo: "",
->>>>>>> Stashed changes
   });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,7 +17,7 @@ const NewPlayerCard: React.FC<{}> = () => {
     console.log(name, value);
   };
 
-  const handleHat = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handletier = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     console.log(e.target);
     setNewPlayer({ ...newPlayer, [name]: value });
@@ -65,13 +56,13 @@ const NewPlayerCard: React.FC<{}> = () => {
               />
             </div>
             <div>
-              <label htmlFor="hat">Chapeau:</label>
+              <label htmlFor="tier">Chapeau:</label>
               <input
                 type="number"
-                id="hat"
-                name="hat"
+                id="tier"
+                name="tier"
                 value={newPlayer.tier}
-                onChange={handleHat}
+                onChange={handletier}
                 required
               />
             </div>

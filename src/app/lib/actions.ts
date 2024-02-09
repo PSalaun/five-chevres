@@ -14,8 +14,9 @@ export const addPlayer = async (player: Player) => {
 };
 
 export const deletePlayer = async (player: Player) => {
+  console.log(player);
   await sql`
-    DELETE FROM table_name WHERE player.id ${player.id};
+    DELETE FROM Player WHERE id = ${player.id};
 `;
   revalidatePath("/players");
   redirect("/players");

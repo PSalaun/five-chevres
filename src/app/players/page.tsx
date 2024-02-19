@@ -1,19 +1,16 @@
-import { fetchPlayers } from "@/app/lib/data/data";
-import { Player } from "@/app/lib/types";
+import MainTitle from "@/app/components/ui/MainTitle";
+import StyPageContainer from "@/app/components/ui/StyPageContainer";
+import { fetchPlayers } from "@/app/lib/data";
 import PlayerList from "@/app/players/component/PlayerList";
-import NewPlayerCard from "@/app/players/component/newPlayerCard";
-import PlayerCard from "@/app/players/component/playerCard";
-import { useState } from "react";
-
 async function Players() {
   const playerList = await fetchPlayers();
   console.log(playerList);
   console.log(playerList.rows);
   return (
-    <div className="page-container">
-      <h1 className="page-title"> Joueurs</h1>
+    <StyPageContainer>
+      <MainTitle>Joueurs</MainTitle>
       <PlayerList playerList={playerList.rows} />
-    </div>
+    </StyPageContainer>
   );
 }
 export default Players;

@@ -1,5 +1,6 @@
 "use client";
 
+import StyCard from "@/app/components/StyCard";
 import { addPlayer } from "@/app/lib/actions";
 import { Player } from "@/app/lib/types";
 import { useState } from "react";
@@ -10,6 +11,8 @@ const NewPlayerCard: React.FC<{}> = () => {
     name: "",
     tier: 0,
     photo: "",
+    victories: 0,
+    defeats: 0,
   });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -33,7 +36,7 @@ const NewPlayerCard: React.FC<{}> = () => {
   };
 
   return (
-    <div className="user-card ">
+    <StyCard>
       {!openNewPlayerForm && (
         <button onClick={(e) => setOpenNewPlayerForm(true)}>
           Ajouter un nouveau joueur
@@ -79,7 +82,7 @@ const NewPlayerCard: React.FC<{}> = () => {
           </form>
         </>
       )}
-    </div>
+    </StyCard>
   );
 };
 export default NewPlayerCard;

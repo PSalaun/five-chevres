@@ -1,23 +1,39 @@
+"use client";
+import MantyLogo from "@/app/components/ui/mantyLogo";
+import theme from "@/theme";
+import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
 import Link from "next/link";
 
 const NavBar = () => {
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link href="/home">Accueil</Link>
-        </li>
-        <li>
-          <Link href="/composition">Equipe</Link>
-        </li>
-        <li>
+    <AppBar
+      position="static"
+      sx={{
+        justifyContent: "flex-end",
+        backgroundColor: theme.palette.primary.main,
+      }}
+    >
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: "4rem",
+          padding: "10px",
+        }}
+      >
+        <MantyLogo />
+        <Container
+          sx={{ display: "flex", justifyContent: "flex-end", gap: "4rem" }}
+        >
+          <Link href="/">Home</Link>
+          <Link href="/composition">Composition</Link>
           <Link href="/players">Joueurs</Link>
-        </li>
-        <li>
-          <Link href="ranking">Classement</Link>
-        </li>
-      </ul>
-    </nav>
+          <Link href="/calendar">Calendrier</Link>
+          <Link href="/ranking">Classement</Link>
+          <Link href="/profil">Profil</Link>
+        </Container>
+      </Toolbar>
+    </AppBar>
   );
 };
 

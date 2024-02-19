@@ -32,7 +32,7 @@ const Calendar = () => {
           {matchList.map((item) => (
             <Grid item spacing={2} key={item.id} xs={12}>
               <StyCard title={`Match no.${item.id}`}>
-                <Typography variant="body">
+                <Typography variant="body1">
                   Score final :{item.score_left_team} - {item.score_right_team}
                 </Typography>
               </StyCard>

@@ -7,8 +7,9 @@ const StyPageContainer = ({ children }: { children: React.ReactNode }) => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        padding: "auto",
+        paddingY: "3rem !important",
         justifyContent: "flex-start",
+        flexGrow: "1",
       }}
     >
       {children}

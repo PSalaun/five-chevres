@@ -14,7 +14,7 @@ const Ranking = () => {
           return (
             <Grid item xs={12} key={item.player_id}>
               <StyCard title={`Joueur ${item.player_id}`}>
-                <Typography variant="body">
+                <Typography variant="body1">
                   Victoires : {item.victories} Défaites : {item.defeats}
                   WR :
                   {Math.round(

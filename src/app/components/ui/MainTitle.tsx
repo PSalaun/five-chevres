@@ -8,7 +8,7 @@ const MainTitle = (props: Props) => {
   return (
     <Typography
       variant="h1"
-      sx={{ textAlign: "left", paddingY: "4rem", fontSize: "4rem" }}
+      sx={{ textAlign: "left", paddingBottom: "1.5rem", fontSize: "3.4rem" }}
     >
       {props.children}
     </Typography>

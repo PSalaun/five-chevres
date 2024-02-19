@@ -7,45 +7,46 @@ import StyPageContainer from "@/app/components/ui/StyPageContainer";
 
 export default function Home() {
   return (
-    <main>
-      <StyPageContainer>
-        <MainTitle>Five Chèvres</MainTitle>
-        <Grid
-          container
-          sx={{
-            width: "100%",
-            height: "100%",
-            minHeight: "30rem",
-            display: "flex",
-          }}
-          spacing={4}
-        >
-          <Grid item xs={6}>
+    <StyPageContainer>
+      <MainTitle>Five Chèvres</MainTitle>
+      <Grid
+        container
+        sx={{
+          width: "100%",
+          height: "100%",
+          minHeight: "30rem",
+          display: "flex",
+        }}
+        spacing={4}
+      >
+        <Grid item xs={6}>
+          <Grid
+            container
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              height: "100%",
+            }}
+          >
             <Grid
-              container
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "100%",
-                height: "100%",
-              }}
-              spacing={4}
+              item
+              xs={12}
+              sx={{ display: "flex", flexGrow: "1", marginBottom: "30px" }}
             >
-              <Grid item xs={12} sx={{ display: "flex", flexGrow: "1" }}>
-                <StyCard title="Rank">Insérer le classement ici</StyCard>
-              </Grid>
-              <Grid item xs={12} sx={{ display: "flex", flexGrow: "1" }}>
-                <StyCard title="Match">
-                  Insérer date du prochain match ici
-                </StyCard>
-              </Grid>
+              <StyCard title="Rank">Insérer le classement ici</StyCard>
+            </Grid>
+            <Grid item xs={12} sx={{ display: "flex", flexGrow: "1" }}>
+              <StyCard title="Match">
+                Insérer date du prochain match ici
+              </StyCard>
             </Grid>
           </Grid>
-          <Grid item xs={6} sx={{ display: "flex", flexGrow: "1" }}>
-            <StyCard title="test">insérer les statistiques ici</StyCard>
-          </Grid>
         </Grid>
-      </StyPageContainer>
-    </main>
+        <Grid item xs={6} sx={{ display: "flex", flexGrow: "1" }}>
+          <StyCard title="test">insérer les statistiques ici</StyCard>
+        </Grid>
+      </Grid>
+    </StyPageContainer>
   );
 }

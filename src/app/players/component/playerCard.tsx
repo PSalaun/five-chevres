@@ -18,14 +18,16 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
   };
   return (
     <StyCard>
-      {editState && <EditPlayerModal />}
+      {/* @ts-expect-error */}
+      {editState && <EditPlayerModal player={player} closeModal={() => setEditState(false)} />}
       <div className="user-pic"></div>
       <div>
         <p>{player.id}</p>
         <h2>{player.name}</h2>
         <p>Chapeau: {player.tier}</p>
       </div>
-      <button>Edit</button>
+      <button onClick={() => setEditState(true)}>Edit</button>
+      {/* @ts-expect-error */}
       <button onClick={onDelete}>Delete</button>
     </StyCard>
   );

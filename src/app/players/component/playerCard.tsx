@@ -22,7 +22,6 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
       {editState && <EditPlayerModal player={player} closeModal={() => setEditState(false)} />}
       <div className="user-pic"></div>
       <div>
-        <p>{player.id}</p>
         <h2>{player.name}</h2>
         <p>Chapeau: {player.tier}</p>
       </div>

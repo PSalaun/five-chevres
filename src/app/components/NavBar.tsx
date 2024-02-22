@@ -26,7 +26,8 @@ const NavBar = () => {
           sx={{ display: "flex", justifyContent: "flex-end", gap: "4rem" }}
         >
           <Link href="/">Home</Link>
-          <Link href="/composition">Composition</Link>
+          {/* TODO: don't hardcode /1 */}
+          <Link href="/composition/1">Composition</Link>
           <Link href="/players">Joueurs</Link>
           <Link href="/calendar">Calendrier</Link>
           <Link href="/ranking">Classement</Link>

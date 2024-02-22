@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
+    "@emotion/server": "^11.11.0",
     "@mui/material": "^5.15.7",
-    "@mui/material-nextjs": "^5.15.7",
+    "@mui/material-nextjs": "^5.15.9",
     "@mui/system": "^5.15.7",
     "@vercel/postgres": "^0.7.2",
     "next": "14.1.0",

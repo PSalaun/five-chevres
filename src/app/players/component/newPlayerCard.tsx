@@ -1,16 +1,18 @@
+"use client";
+
+import StyCard from "@/app/components/StyCard";
+import { addPlayer } from "@/app/lib/actions";
 import { Player } from "@/app/lib/types";
 import { useState } from "react";
-
-interface NewPlayerCardProps {
-  onSubmit: (player: Player) => void;
-}
-const NewPlayerCard: React.FC<NewPlayerCardProps> = ({ onSubmit }) => {
+const NewPlayerCard: React.FC<{}> = () => {
   const [openNewPlayerForm, setOpenNewPlayerForm] = useState<boolean>(false);
   const [newPlayer, setNewPlayer] = useState<Player>({
     id: 0,
     name: "",
-    hat: 0,
+    tier: 0,
     photo: "",
+    victories: 0,
+    defeats: 0,
   });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -18,7 +20,7 @@ const NewPlayerCard: React.FC<NewPlayerCardProps> = ({ onSubmit }) => {
     console.log(name, value);
   };
 
-  const handleHat = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handletier = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     console.log(e.target);
     setNewPlayer({ ...newPlayer, [name]: value });
@@ -29,11 +31,12 @@ const NewPlayerCard: React.FC<NewPlayerCardProps> = ({ onSubmit }) => {
     e.preventDefault();
     // Appeler la fonction onSubmit du parent avec les données du formulaire
     console.log(newPlayer);
-    onSubmit(newPlayer);
+    addPlayer(newPlayer);
+    // onSubmit(newPlayer);
   };
 
   return (
-    <div className="user-card ">
+    <StyCard>
       {!openNewPlayerForm && (
         <button onClick={(e) => setOpenNewPlayerForm(true)}>
           Ajouter un nouveau joueur
@@ -56,13 +59,13 @@ const NewPlayerCard: React.FC<NewPlayerCardProps> = ({ onSubmit }) => {
               />
             </div>
             <div>
-              <label htmlFor="hat">Chapeau:</label>
+              <label htmlFor="tier">Chapeau:</label>
               <input
                 type="number"
-                id="hat"
-                name="hat"
-                value={newPlayer.hat}
-                onChange={handleHat}
+                id="tier"
+                name="tier"
+                value={newPlayer.tier}
+                onChange={handletier}
                 required
               />
             </div>
@@ -79,7 +82,7 @@ const NewPlayerCard: React.FC<NewPlayerCardProps> = ({ onSubmit }) => {
           </form>
         </>
       )}
-    </div>
+    </StyCard>
   );
 };
 export default NewPlayerCard;

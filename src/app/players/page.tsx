@@ -1,45 +1,16 @@
-import { fetchPlayers } from "@/app/lib/data/data";
-import { Player } from "@/app/lib/types";
-import NewPlayerCard from "@/app/players/component/newPlayerCard";
-import PlayerCard from "@/app/players/component/playerCard";
-
+import MainTitle from "@/app/components/ui/MainTitle";
+import StyPageContainer from "@/app/components/ui/StyPageContainer";
+import { fetchPlayers } from "@/app/lib/data";
+import PlayerList from "@/app/players/component/PlayerList";
 async function Players() {
-  const playersList = await fetchPlayers();
-  console.log(playersList);
-  console.log(playersList.rows);
-  // const [playerList, setPlayerList] = useState<Player[]>([
-  //   {
-  //     id: 0,
-  //     name: "Jane",
-  //     hat: 1,
-  //     photo: "1",
-  //   },
-  //   {
-  //     id: 1,
-  //     name: "John",
-  //     hat: 1,
-  //     photo: "2",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Janne",
-  //     hat: 3,
-  //     photo: "2",
-  //   },
-  // ]);
-
-  // const handleFormSubmit = (player: Player) => {
-  //   // Effectuez ici le traitement souhaité avec les données du formulaire
-  //   console.log("Données soumises :", player);
-  //   player.id = Math.floor(Math.random() * 1000);
-  //   setPlayerList([...playerList, player]);
-  //   console.log(playerList);
-  // };
-
+  const playerList = await fetchPlayers();
+  console.log(playerList);
+  console.log(playerList.rows);
   return (
-    <div className="page-container">
-      <h1 className="page-title"> Joueurs</h1>
-    </div>
+    <StyPageContainer>
+      <MainTitle>Joueurs</MainTitle>
+      <PlayerList playerList={playerList.rows} />
+    </StyPageContainer>
   );
 }
 export default Players;

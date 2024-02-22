@@ -4,8 +4,6 @@ import { fetchPlayers } from "@/app/lib/data";
 import PlayerList from "@/app/players/component/PlayerList";
 async function Players() {
   const playerList = await fetchPlayers();
-  console.log(playerList);
-  console.log(playerList.rows);
   return (
     <StyPageContainer>
       <MainTitle>Joueurs</MainTitle>

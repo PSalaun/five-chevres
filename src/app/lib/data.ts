@@ -5,7 +5,7 @@ export const fetchPlayers = async () => {
   return await sql<Player>`
   SELECT *
   FROM player
-  ORDER BY player.id 
+  ORDER BY player.name
 `;
 };
 // TODO : test later
@@ -44,6 +44,7 @@ export const fetchMatches = (): Match[] => {
       score_right_team: 0,
     },
   ];
+  /* @ts-expect-error */
   return fakeMatch;
 };
 // TODO : test later

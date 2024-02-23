@@ -1,7 +1,7 @@
 import { Container } from "@mui/system";
 import styles from "./page.module.css";
 import StyCard from "@/app/components/StyCard";
-import { Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import MainTitle from "@/app/components/ui/MainTitle";
 import StyPageContainer from "@/app/components/ui/StyPageContainer";
 
@@ -34,7 +34,9 @@ export default function Home() {
               xs={12}
               sx={{ display: "flex", flexGrow: "1", marginBottom: "30px" }}
             >
-              <StyCard title="Rank">Insérer le classement ici</StyCard>
+              <StyCard title="Rank">
+                <Typography sx={{ fontWeight: 700, fontSize: '1.5rem'}}>Nicolhall of fame : 1 but 🎉🎉🎉🎉</Typography>
+              </StyCard>
             </Grid>
             <Grid item xs={12} sx={{ display: "flex", flexGrow: "1" }}>
               <StyCard title="Match">

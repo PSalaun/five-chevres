@@ -15,7 +15,7 @@ export type Team = {
   id: number;
   name: string;
 };
-export type TeamPlayers = {
+export type TeamPlayer = {
   teamId: number;
   playerId: Array<number>;
 };
@@ -39,4 +39,3 @@ export type Ranking = {
   victories: number;
   defeats: number;
 };
-

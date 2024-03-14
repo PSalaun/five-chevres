@@ -1,21 +1,20 @@
 "use client"
 import { Box, Button, List, ListItem, Switch, Typography } from "@mui/material";
-import { Player, Team } from "@/app/lib/types";
-import { createTeams, fetchPlayers, fetchPlayersAndSetAvailability } from "@/app/lib/data/data";
+import { Player, PlayerWithAvailability, Team } from "@/app/lib/types";
+import { createTeams, fetchPlayersAndSetAvailability, putAvailability } from "@/app/lib/data/data";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
 const Composition = () => {
     const params = useParams();
-    const matchId = params.id;
-    const [players, setPlayers] = useState<Player[]>([]);
+    const paramMatchId = params.id as string;
+    const matchId = parseInt(paramMatchId, 10);
+    const [players, setPlayers] = useState<PlayerWithAvailability[]>([]);
     const [teams, setTeams] = useState<[Team, Team] | [null, null]>([null, null]);
-    const [compositions, setCompositions] = useState<Record<string, Array<Player>>>({ teamA: [], teamB: [] });
+    const [compositions, setCompositions] = useState<Record<string, Array<PlayerWithAvailability>>>({ teamA: [], teamB: [] });
     useEffect(() => {
-        console.log({ params, matchId })
         const getPlayers = async () => {
-            const players = await fetchPlayers();
-            // const players = await fetchPlayersAndSetAvailability(parseInt(matchId, 10));
+            const players = await fetchPlayersAndSetAvailability(matchId);
             setPlayers(players);
         }
         getPlayers();
@@ -25,11 +24,18 @@ const Composition = () => {
         }
         fetchTeams();
     }, [])
-    const createCompositions = (teams: [Team, Team] | [null, null], players: Player[]) => {
+
+    const updateAvailability = (isAvailable: boolean, playerId: number) => {
+        putAvailability(playerId, matchId, isAvailable);
+        const updatedPlayers = players.map(player => player.id === playerId ? { ...player, isAvailable } : player);
+        setPlayers(updatedPlayers);
+    }
+
+    const createCompositions = (teams: [Team, Team] | [null, null], players: PlayerWithAvailability[]) => {
         // avoir 2 teams, de 5 joueurs chacune
         // avoir au moins 1 joueur par groupe
         if (!teams[0] || !teams[1]) return;
-        const playersByTier = players.reduce<Record<number, Player[]>>((acc, player: Player) => {
+        const playersByTier = players.reduce<Record<number, PlayerWithAvailability[]>>((acc, player: PlayerWithAvailability) => {
             if (acc[player.tier]) {
                 acc[player.tier].push(player);
             } else {
@@ -39,9 +45,9 @@ const Composition = () => {
         }, {});
         const leftTeamName = teams[0].name;
         const rightTeamName = teams[1].name;
-        const generatedCompositions = Object.entries(playersByTier).reduce((teams: Record<string, Array<Player>>, currentTier) => {
-            const randomizedPlayers = currentTier[1].sort(() => Math.random() - 0.5);
-            randomizedPlayers.forEach((player: Player) => {
+        const generatedCompositions = Object.entries(playersByTier).reduce((teams: Record<string, Array<PlayerWithAvailability>>, currentTier) => {
+            const randomizedPlayers = currentTier[1].filter(player => player.isAvailable).sort(() => Math.random() - 0.5);
+            randomizedPlayers.forEach((player: PlayerWithAvailability) => {
                 const teamName = teams[leftTeamName].length > teams[rightTeamName].length ? rightTeamName : leftTeamName;
                 teams[teamName].push(player)
             })
@@ -61,10 +67,10 @@ const Composition = () => {
                     {[...players].sort((a, b) => a.tier - b.tier).map((player) => {
                         return <li key={player.id}><Box sx={{ display: 'flex' }}>
                             {player.name} - Chapeau {player.tier}
-                            {/* <Switch
+                            <Switch
                                 checked={player.isAvailable}
-                                onChange={handleChange}
-                            /> */}
+                                onChange={(e) => updateAvailability(e.target.checked, player.id)}
+                            />
                         </Box></li>
                     }
                     )}

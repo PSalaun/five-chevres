@@ -7,6 +7,10 @@ export type Player = {
   defeats: number;
 };
 
+export type PlayerWithAvailability = Player & {
+  isAvailable: boolean;
+};
+
 export type Team = {
   id: number;
   name: string;

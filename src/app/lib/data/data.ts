@@ -1,6 +1,6 @@
 "use server"
 
-import { Player, Team } from "@/app/lib/types";
+import { Availabiliy, Player, PlayerWithAvailability, Team } from "@/app/lib/types";
 import { sql } from "@vercel/postgres";
 
 // Retrieve all players
@@ -13,19 +13,35 @@ export const fetchPlayers = async (): Promise<Player[]> => {
   return data.rows
 };
 
-export const fetchPlayersAndSetAvailability = async (matchId: number): Promise<Player[]> => {
-  console.log({ matchId })
-  const data = await sql<Player>`
+const getOrCreateAvailability = async (players: Player[], matchId: number): Promise<PlayerWithAvailability[]> => {
+  const playersWithAvailability = await Promise.all(players.map( async (player) => {
+    const availabilityData = await sql<{ is_available: boolean}>`SELECT is_available FROM availability WHERE player_id = ${player.id} AND match_id = ${matchId}`;
+    const hasAlreadyAvailabilityData = availabilityData.rowCount > 0;
+    if (!hasAlreadyAvailabilityData) {
+      sql`INSERT INTO availability(player_id, match_id, is_available) VALUES (${player.id}, ${matchId}, false)`;
+    }
+    return { ...player, isAvailable: availabilityData.rows[0]?.is_available ?? false }
+  }))
+  return playersWithAvailability
+}
+
+export const fetchPlayersAndSetAvailability = async (matchId: number): Promise<PlayerWithAvailability[]> => {
+  const data = await sql<PlayerWithAvailability>`
   SELECT *
   FROM player
   ORDER BY player.id 
-`;
+  `;
   const players = data.rows
-  const values = players.map(player => `(${player.id}, ${matchId}, false)`).join(', ')
-  const query = `INSERT INTO availability(player_id, match_id, is_available) VALUES ${values}`;
-  const availability = await sql`${query}`;
-  return players.map(player => ({ ...player, isAvailable: false }))
+  return getOrCreateAvailability(players, matchId)
 };
+
+export const putAvailability = (playerId: number, matchId: number, isAvailable: boolean) => {
+  sql<Availabiliy>`
+  UPDATE availability
+  SET is_available = ${isAvailable}
+  WHERE player_id = ${playerId} AND match_id = ${matchId}
+  `;
+}
 
 export const createTeams = async (): Promise<[Team, Team]> => {
   const data = await sql<Team>`

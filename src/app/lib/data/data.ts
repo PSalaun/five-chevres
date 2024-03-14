@@ -52,3 +52,12 @@ export const createTeams = async (): Promise<[Team, Team]> => {
   // @ts-expect-error
   return data.rows
 }
+
+export const createMatch = async (datetime: string): Promise<number> => {
+  const data = await sql<{ id: number }>`
+  INSERT INTO match(date)
+  VALUES (${datetime}::timestamp)
+  RETURNING id
+`;
+  return data.rows[0].id
+}

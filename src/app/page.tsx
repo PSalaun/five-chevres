@@ -1,11 +1,21 @@
-import { Container } from "@mui/system";
-import styles from "./page.module.css";
+"use client";
 import StyCard from "@/app/components/StyCard";
-import { Box, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import MainTitle from "@/app/components/ui/MainTitle";
 import StyPageContainer from "@/app/components/ui/StyPageContainer";
+import { createMatch } from "@/app/lib/data/data";
+import React from "react";
+import DatePickerModal from "@/app/components/DatePickerModal";
+
 
 export default function Home() {
+  const createMatchAndRedirect = (datetime: string) => {
+    createMatch(datetime).then((matchId) => {
+      window.location.href = `/composition/${matchId}`;
+    });
+  };
+  const [isOpen, setIsOpen] = React.useState(false);
+  const openModal = () => setIsOpen(true);
   return (
     <StyPageContainer>
       <MainTitle>Five Chèvres</MainTitle>
@@ -40,6 +50,7 @@ export default function Home() {
             </Grid>
             <Grid item xs={12} sx={{ display: "flex", flexGrow: "1" }}>
               <StyCard title="Match">
+                <Button onClick={openModal}>Créer un match</Button>
                 Insérer date du prochain match ici
               </StyCard>
             </Grid>
@@ -49,6 +60,7 @@ export default function Home() {
           <StyCard title="test">insérer les statistiques ici</StyCard>
         </Grid>
       </Grid>
+      <DatePickerModal isOpen={isOpen} createMatchCallback={createMatchAndRedirect} />
     </StyPageContainer>
   );
 }

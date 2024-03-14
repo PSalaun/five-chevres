@@ -160,3 +160,14 @@ export const deleteTeam = async (teamId: number) => {
     DELETE FROM Team WHERE id = ${teamId};
 `;
 };
+  return data.rows
+}
+
+export const createMatch = async (datetime: string): Promise<number> => {
+  const data = await sql<{ id: number }>`
+  INSERT INTO match(date)
+  VALUES (${datetime}::timestamp)
+  RETURNING id
+`;
+  return data.rows[0].id
+}

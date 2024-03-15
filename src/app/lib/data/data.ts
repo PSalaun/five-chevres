@@ -132,8 +132,11 @@ export const createTeamsAndPlayers = async (
       VALUES (${team[1].id}, ${player.id})
     `;
   });
-  const match = await updateMatchInfos(team[0].id, team[1].id, matchId);
-  console.log(match);
+  await sql<Match>`
+     UPDATE match (left_team_id, right_team_id)
+    VALUES(${team[0].id}, ${team[1].id}
+    WHERE id = ${matchId};
+    `;
 };
 
 export const fetchMatches = async (): Promise<Match[]> => {
@@ -151,7 +154,6 @@ export const updateScoreMatch = async (
   rightTeamScore: number
 ) => {
   const data = await sql<Match[]>`
-      UPDATE Match
       UPDATE match 
       SET score_left_team = ${leftTeamScore}, score_right_team = ${rightTeamScore}
       WHERE id = ${matchId}
@@ -169,6 +171,14 @@ export const deleteTeam = async (teamId: number) => {
   await sql`
     DELETE FROM Team WHERE id = ${teamId};
 `;
+};
+export const getMatchInfo = async (matchId: number): Match => {
+  const data = await sql<Match>`
+    SELECT *
+    FROM match
+    WHERE id = ${matchId}
+  `;
+  return data.rows;
 };
 
 export const createMatch = async (datetime: string): Promise<number> => {
@@ -190,20 +200,66 @@ export const editMatch = async (
   WHERE id = ${matchId}`;
   // invalidate here
 };
+export const deleteMatch = async (matchId: number) => {
+  await sql`
+ DELETE FROM match WHERE id = ${matchId}`;
+};
 export const getAllMatches = async (): Promise<Match[]> => {
   const data = await sql<Match>`
   SELECT * 
   FROM match
+  ORDER BY date
   `;
   return data.rows;
 };
 export const getTeamPlayersName = async (teamId: number): Promise<string[]> => {
-  const data = await sql<Player[]>`
-    SELECT *
-    FROM player
-    JOIN player ON team_player.player_id = player.id
-    WHERE team_player.team_id = ${teamId}
+  const data = await sql`
+    SELECT name
+    FROM player p
+    INNER JOIN team_player tp ON p.id = tp.player_id
+    WHERE tp.team_id = ${teamId};
   `;
+
   console.log(data.rows);
+  return data.rows.map((row) => row.name);
+};
+export const getTeamNamesFromMatch = async (
+  teamId: [number, number]
+): Promise<[string, string]> => {
+  const data = await sql`
+    SELECT name
+    FROM team
+    WHERE id = ${teamId[0]} OR id = ${teamId[1]}
+  `;
   return data.rows;
+};
+export const fetchNextMatch = async (): Promise<Match> => {
+  const data = await sql<Match>`
+  SELECT *
+  FROM match
+  WHERE date > now()
+  ORDER BY date
+  LIMIT 1
+  `;
+  return data.rows[0];
+};
+
+export const updateTeams = async (
+  teams: [Team, Team],
+  compositions: Record<string, Array<PlayerWithAvailability>>
+) => {
+  console.log(teams);
+  console.log(compositions);
+  compositions[teams[0].name].forEach((player: PlayerWithAvailability) => {
+    sql`
+     INSERT INTO team_player(player_id, team_id)
+     VALUES (${player.id}, ${teams[0].id})
+     `;
+  });
+  compositions[teams[1].name].forEach((player: PlayerWithAvailability) => {
+    sql`
+     INSERT INTO team_player(player_id, team_id)
+     VALUES (${player.id}, ${teams[1].id})
+     `;
+  });
 };

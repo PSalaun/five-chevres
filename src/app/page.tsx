@@ -3,10 +3,25 @@ import StyCard from "@/app/components/StyCard";
 import { Button, Grid, Typography } from "@mui/material";
 import MainTitle from "@/app/components/ui/MainTitle";
 import StyPageContainer from "@/app/components/ui/StyPageContainer";
-import { createMatch } from "@/app/lib/data/data";
-import React from "react";
+import { createMatch, getPlayersRanking } from "@/app/lib/data/data";
+import React, { useEffect } from "react";
 import DatePickerModal from "@/app/components/DatePickerModal";
 
+const Ranking = () => {
+  const [statisticsByPlayer, setStatisticsByPlayer] = React.useState<{
+    id: number;
+    name: string;
+    matchCount: number;
+    victoryPercentage: number;
+  }[]>([])
+  useEffect(() => {
+    getPlayersRanking().then((stats) => setStatisticsByPlayer(stats))
+  },[])
+  const comp = statisticsByPlayer.map(playerStats => 
+    <Typography key={playerStats.name}>{playerStats.name} : {playerStats.victoryPercentage}% de victoires sur {playerStats.matchCount} matchs</Typography>
+  )
+  return <StyCard title="test">{comp}</StyCard>;
+}
 
 export default function Home() {
   const createMatchAndRedirect = (datetime: string) => {
@@ -57,7 +72,7 @@ export default function Home() {
           </Grid>
         </Grid>
         <Grid item xs={6} sx={{ display: "flex", flexGrow: "1" }}>
-          <StyCard title="test">insérer les statistiques ici</StyCard>
+          <Ranking />
         </Grid>
       </Grid>
       <DatePickerModal isOpen={isOpen} createMatchCallback={createMatchAndRedirect} />

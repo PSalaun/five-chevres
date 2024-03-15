@@ -61,3 +61,23 @@ export const createMatch = async (datetime: string): Promise<number> => {
 `;
   return data.rows[0].id
 }
+
+export const getPlayersRanking = async ()=> {
+  const data = await sql<{id: number, name: string, matchCount: number, victoryPercentage: number}>`
+    SELECT 
+      p.id AS id, 
+      p.name AS name, 
+      COUNT(m.id) AS matchCount, 
+      COUNT(CASE WHEN (m.left_team_id = tp.team_id AND m.score_left_team > m.score_right_team) OR 
+                  (m.right_team_id = tp.team_id AND m.score_right_team > m.score_left_team) THEN 1 END) * 100.0 / COUNT(m.id) AS victoryPercentage
+      FROM 
+          player p
+      JOIN 
+          team_player tp ON p.id = tp.player_id
+      JOIN 
+          match m ON (m.left_team_id = tp.team_id OR m.right_team_id = tp.team_id)
+      GROUP BY 
+          p.id;
+  `;
+  return data.rows
+} 

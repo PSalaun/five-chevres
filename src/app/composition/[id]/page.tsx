@@ -10,6 +10,7 @@ import {
   fetchMatches,
   fetchPlayers,
   fetchPlayersAndSetAvailability,
+  getTeamPlayersName,
   putAvailability,
 } from '@/app/lib/data/data';
 import { useEffect, useState } from 'react';
@@ -43,6 +44,7 @@ const Composition = () => {
       const allTeams = await fetchExistingTeams();
       //console.log(allTeams);
       setTeams([allTeams[allTeams.length - 1], allTeams[allTeams.length - 2]]);
+      setExistingTeams(allTeams);
     };
     getTeams();
     const getMatches = async () => {
@@ -51,6 +53,15 @@ const Composition = () => {
     };
     getMatches();
   }, []);
+  useEffect(() => {
+    if (!existingTeams) return;
+    let players: Record<number, Player[]> = [];
+
+    existingTeams.forEach((team: Team) => {
+      const player = getTeamPlayersName(team.id);
+      players.push(player);
+    });
+  }, [existingTeams]);
 
   const createCompositions = (
     teams: [Team, Team] | [null, null],
@@ -90,10 +101,10 @@ const Composition = () => {
     setCompositions(generatedCompositions);
     console.log(generatedCompositions);
   };
-  const createTeams = () => {
-    if (teams[0] !== null && teams[1] !== null) {
-      createTeamsAndPlayers([teams[0], teams[1]], compositions);
-    }
+  const generateTeams = async () => {
+    const teams = await createTeams();
+    setTeams(teams);
+    createTeamsAndPlayers(matchId, teams, compositions);
   };
   const updateAvailability = (isAvailable: boolean, playerId: number) => {
     putAvailability(playerId, matchId, isAvailable);
@@ -118,9 +129,12 @@ const Composition = () => {
           width: '100%',
         }}>
         <aside>
-          {matches.map((match) => (
-            <p key={match.id}>{match.id}</p>
-          ))}
+          <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+            <p>Match :</p>
+            {matches.map((match) => (
+              <p key={match.id}>{match.id} </p>
+            ))}
+          </Box>
           <Typography variant='h3' sx={{ mb: 2 }}>
             Joueurs
           </Typography>
@@ -243,7 +257,7 @@ const Composition = () => {
             onClick={() => createCompositions(teams, players)}>
             Génère moi les équipes
           </Button>
-          <Button variant='contained' onClick={() => createTeams()}>
+          <Button variant='contained' onClick={() => generateTeams()}>
             Valider et créer le match
           </Button>
         </Box>

@@ -96,13 +96,3 @@ export const fetchUser = (): Player => {
     defeats: 0,
   };
 };
-export const fetchExistingTeams = async (): Promise<Team[]> => {
-  const data = await sql<Team>`
-  SELECT *
-  FROM team
-  ORDER BY team.id
-`;
-  console.log(data.rows);
-  // @ts-expect-error
-  return data.rows;
-};

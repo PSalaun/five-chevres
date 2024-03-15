@@ -2,6 +2,8 @@
 
 import { Player } from "@/app/lib/types";
 import { sql } from "@vercel/postgres";
+import { AuthError } from "next-auth";
+import { signIn } from "next-auth/react";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -33,3 +35,23 @@ export const editPlayer = async (player: Player) => {
   revalidatePath("/players");
   redirect("/players");
 };
+
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  console.log({formData})
+  try {
+    await signIn('credentials', formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error;
+  }
+}

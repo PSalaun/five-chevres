@@ -16,10 +16,13 @@
     "@mui/system": "^5.15.7",
     "@mui/x-date-pickers": "^6.19.7",
     "@vercel/postgres": "^0.7.2",
+    "bcrypt": "^5.1.1",
     "dayjs": "^1.11.10",
     "next": "14.1.0",
+    "next-auth": "^5.0.0-beta.15",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",

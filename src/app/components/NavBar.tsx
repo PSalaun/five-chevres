@@ -1,5 +1,6 @@
 "use client";
 import MantyLogo from "@/app/components/ui/mantyLogo";
+import { signOut } from "@/auth";
 import theme from "@/theme";
 import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
 import Link from "next/link";
@@ -32,6 +33,15 @@ const NavBar = () => {
           <Link href="/calendar">Calendrier</Link>
           <Link href="/ranking">Classement</Link>
           <Link href="/profil">Profil</Link>
+          <form
+            action={async () => {
+              await signOut();
+            }}
+          >
+            <button className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
+              <div className="hidden md:block">Sign Out</div>
+            </button>
+          </form>
         </Container>
       </Toolbar>
     </AppBar>

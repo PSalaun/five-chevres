@@ -1,5 +1,5 @@
-import { Match, Player, Ranking } from "@/app/lib/types";
-import { sql } from "@vercel/postgres";
+import { Match, Player, Ranking, Team } from '@/app/lib/types';
+import { sql } from '@vercel/postgres';
 
 export const fetchPlayers = async () => {
   return await sql<Player>`
@@ -89,9 +89,9 @@ export const fetchRanking = (): Ranking[] => {
 export const fetchUser = (): Player => {
   return {
     id: 1,
-    name: "test",
+    name: 'test',
     tier: 1,
-    photo: "test",
+    photo: 'test',
     victories: 0,
     defeats: 0,
   };

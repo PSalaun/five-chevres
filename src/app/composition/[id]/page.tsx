@@ -210,154 +210,137 @@ const Composition = () => {
               </Select>
             </FormControl>
           </Box>
-          {playersA.length > 0 && playersB.length > 0 ? (
-            <>
-              <Typography variant='body' sx={{ mb: 2 }}>
-                {playersA.map((name: string) => (
-                  <p key={name}>{name}</p>
-                ))}
-              </Typography>
-              <Typography variant='body' sx={{ mb: 2 }}>
-                {playersB.map((name: string) => (
-                  <p key={name}>{name}</p>
-                ))}
-              </Typography>
-            </>
-          ) : (
-            <>
-              <Typography variant='h3' sx={{ mb: 2 }}>
-                Joueurs
-              </Typography>
-              <List
-                sx={{
-                  listStyle: 'none',
-                  p: 0,
-                  m: 0,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 2,
-                }}>
-                {[...players]
-                  .sort((a, b) => a.tier - b.tier)
-                  .map((player) => {
-                    return (
-                      <li key={player.id}>
-                        <Box sx={{ display: 'flex' }}>
-                          {player.name} - Chapeau {player.tier}
-                          <Switch
-                            checked={player.isAvailable}
-                            onChange={(e) =>
-                              updateAvailability(e.target.checked, player.id)
-                            }
-                          />
-                        </Box>
-                      </li>
-                    );
-                  })}
-              </List>
+          <>
+            <Typography variant='h3' sx={{ mb: 2 }}>
+              Joueurs
+            </Typography>
+            <List
+              sx={{
+                listStyle: 'none',
+                p: 0,
+                m: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 2,
+              }}>
+              {[...players]
+                .sort((a, b) => a.tier - b.tier)
+                .map((player) => {
+                  return (
+                    <li key={player.id}>
+                      <Box sx={{ display: 'flex' }}>
+                        {player.name} - Chapeau {player.tier}
+                        <Switch
+                          checked={player.isAvailable}
+                          onChange={(e) =>
+                            updateAvailability(e.target.checked, player.id)
+                          }
+                        />
+                      </Box>
+                    </li>
+                  );
+                })}
+            </List>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 2,
+              }}>
               <Box
                 sx={{
                   display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: 2,
+                  justifyContent: 'space-between',
+                  gap: 3,
                 }}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    gap: 3,
-                  }}>
-                  <div>
-                    <Typography variant='h4' sx={{ mb: 2 }}>
-                      {leftTeamName}
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 2,
-                        width: '300px',
-                        height: '220px',
-                        backgroundColor: 'green',
-                        padding: '2rem 1.5rem',
-                      }}>
-                      {leftTeamName && (
-                        <List
-                          sx={{
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            justifyContent: 'space-around',
-                          }}>
-                          {compositions[leftTeamName]?.map((player: Player) => (
-                            <ListItem
-                              sx={{
-                                listStyle: 'none',
-                                textAlign: 'center',
-                                fontWeight: 700,
-                                width: 'fit-content',
-                                mb: 2,
-                              }}
-                              key={player.id}>
-                              {player.name}
-                            </ListItem>
-                          ))}
-                        </List>
-                      )}
-                    </Box>
-                  </div>
-                  <div>
-                    <Typography variant='h4' sx={{ mb: 2 }}>
-                      {rightTeamName}
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 2,
-                        width: '300px',
-                        height: '220px',
-                        backgroundColor: 'green',
-                        padding: '2rem 1.5rem',
-                      }}>
-                      {rightTeamName && (
-                        <List
-                          sx={{
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            justifyContent: 'space-around',
-                          }}>
-                          {compositions[rightTeamName]?.map(
-                            (player: Player) => (
-                              <ListItem
-                                sx={{
-                                  listStyle: 'none',
-                                  textAlign: 'center',
-                                  fontWeight: 700,
-                                  width: 'fit-content',
-                                  mb: 2,
-                                }}
-                                key={player.id}>
-                                {player.name}
-                              </ListItem>
-                            )
-                          )}
-                        </List>
-                      )}
-                    </Box>
-                  </div>
-                </Box>
-                <Button
-                  variant='contained'
-                  onClick={() => createCompositions(teams, players)}>
-                  Génère moi les équipes
-                </Button>
-                <Button variant='contained' onClick={() => updateEditedTeams()}>
-                  Valider et créer le match
-                </Button>
+                <div>
+                  <Typography variant='h4' sx={{ mb: 2 }}>
+                    {leftTeamName}
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 2,
+                      width: '300px',
+                      height: '220px',
+                      backgroundColor: 'green',
+                      padding: '2rem 1.5rem',
+                    }}>
+                    {leftTeamName && (
+                      <List
+                        sx={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          justifyContent: 'space-around',
+                        }}>
+                        {compositions[leftTeamName]?.map((player: Player) => (
+                          <ListItem
+                            sx={{
+                              listStyle: 'none',
+                              textAlign: 'center',
+                              fontWeight: 700,
+                              width: 'fit-content',
+                              mb: 2,
+                            }}
+                            key={player.id}>
+                            {player.name}
+                          </ListItem>
+                        ))}
+                      </List>
+                    )}
+                  </Box>
+                </div>
+                <div>
+                  <Typography variant='h4' sx={{ mb: 2 }}>
+                    {rightTeamName}
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 2,
+                      width: '300px',
+                      height: '220px',
+                      backgroundColor: 'green',
+                      padding: '2rem 1.5rem',
+                    }}>
+                    {rightTeamName && (
+                      <List
+                        sx={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          justifyContent: 'space-around',
+                        }}>
+                        {compositions[rightTeamName]?.map((player: Player) => (
+                          <ListItem
+                            sx={{
+                              listStyle: 'none',
+                              textAlign: 'center',
+                              fontWeight: 700,
+                              width: 'fit-content',
+                              mb: 2,
+                            }}
+                            key={player.id}>
+                            {player.name}
+                          </ListItem>
+                        ))}
+                      </List>
+                    )}
+                  </Box>
+                </div>
               </Box>
-            </>
-          )}
+              <Button
+                variant='contained'
+                onClick={() => createCompositions(teams, players)}>
+                Génère moi les équipes
+              </Button>
+              <Button variant='contained' onClick={() => updateEditedTeams()}>
+                Valider et créer le match
+              </Button>
+            </Box>
+          </>
         </aside>
       </Box>
       <Box

@@ -51,7 +51,7 @@ export default function Home() {
               sx={{ display: 'flex', flexGrow: '1', marginBottom: '30px' }}>
               <StyCard title='Rank'>
                 <Typography sx={{ fontWeight: 700, fontSize: '1.5rem' }}>
-                  Nicolhall of fame : 1 but 🎉🎉🎉🎉
+                  Nicolhall of fame : 3 buts 🎉🎉🎉🎉
                 </Typography>
               </StyCard>
             </Grid>
